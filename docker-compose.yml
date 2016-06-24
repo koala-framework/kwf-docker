@@ -1,0 +1,37 @@
+web:
+  build: images/nginx
+  ports:
+    - "8080:80"
+  volumes:
+    - ./src:/var/www
+    - ./src/vhost.conf:/etc/nginx/sites-enabled/vhost.conf
+  links:
+    - php
+
+php:
+  build: images/php56
+  volumes:
+    - ./src/php-fpm.conf:/etc/php5/fpm/php-fpm.conf
+    - ./src:/var/www
+    - ./data/uploads:/var/www/uploads
+  links:
+    - db
+    - memcached
+
+db:
+  image: mysql:5.7
+  volumes:
+   - ./data/mysql:/var/lib/mysql
+  environment:
+    MYSQL_ROOT_PASSWORD: kwf
+    MYSQL_DATABASE: kwf
+    MYSQL_USER: kwf
+    MYSQL_PASSWORD: kwf
+
+memcached:
+  image: memcached
+
+#dev:
+  #image: kwf/dev
+  #volumes:
+   #- ./src:/var/www
