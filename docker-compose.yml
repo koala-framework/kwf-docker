@@ -1,19 +1,18 @@
 web:
-  build: images/nginx
+  image: nginx:1.10
   ports:
     - "8080:80"
   volumes:
-    - ./src:/var/www
-    - ./src/vhost.conf:/etc/nginx/sites-enabled/vhost.conf
+    - ./src/nginx.conf:/etc/nginx/nginx.conf:ro
+    - ./src/public:/var/www/html
   links:
-    - php
+    - php-fpm
 
-php:
-  build: images/php56
+php-fpm:
+  build: images/php-fpm
   volumes:
-    - ./src/php-fpm.conf:/etc/php5/fpm/php-fpm.conf
-    - ./src:/var/www
-    - ./data/uploads:/var/www/uploads
+    - ./src/public:/var/www/html
+    - ./data/uploads:/var/www/html/uploads
   links:
     - db
     - memcached
@@ -29,9 +28,19 @@ db:
     MYSQL_PASSWORD: kwf
 
 memcached:
-  image: memcached
+  image: memcached:1.4
 
-#dev:
-  #image: kwf/dev
-  #volumes:
-   #- ./src:/var/www
+php-cli:
+  build: images/php-cli
+  volumes:
+    - ./src/public:/var/www/html
+    - ./data/uploads:/var/www/html/uploads
+  links:
+    - db
+    - memcached
+  entrypoint: ['php', '/var/www/html/bootstrap.php']
+
+build:
+  build: images/build
+  volumes:
+    - ./src/public:/var/www/html
