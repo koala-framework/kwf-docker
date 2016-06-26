@@ -2,6 +2,7 @@ FROM php:5.6-cli
 MAINTAINER Niko Sams <ns@vivid-planet.com>
 
 RUN apt-get update && apt-get install -y nodejs npm git-core
+RUN docker-php-ext-install zip
 
 RUN npm install bower
 
@@ -18,6 +19,7 @@ RUN php /tmp/composer-setup.php --no-ansi --install-dir=/usr/local/bin --filenam
 
 ADD ./php.ini /usr/local/etc/php/conf.d
 ADD ./entrypoint.php /usr/local/bin/entrypoint.php
+
 
 WORKDIR /var/www/html
 CMD [""]
