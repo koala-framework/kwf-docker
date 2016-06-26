@@ -30,6 +30,15 @@ db:
 memcached:
   image: memcached:1.4
 
+maintenance-jobs:
+  build: images/maintenance-jobs
+  volumes:
+    - ./src/public:/var/www/html
+    - ./data/uploads:/var/www/html/uploads
+  links:
+    - db
+    - memcached
+
 php-cli:
   build: images/php-cli
   volumes:
