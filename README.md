@@ -3,10 +3,11 @@
 ## Usage
 
     docker-compose run --rm build composer install
-    docker-compose run --rm build build
-    docker exec -i dockertest_db_1 mysql --password=kwf kwf < dump.sql
-    docker-compose run php-cli clear-cache
     docker-compose up
+    docker exec -i dockertest_db_1 mysql --password=kwf kwf < dump.sql
+    docker-compose run --rm build clear-cache
+    docker-compose run --rm build build
+    docker-compose run --rm php-cli clear-cache
 
 ## Environment Variables
 
