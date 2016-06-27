@@ -11,3 +11,6 @@ RUN pecl install apcu-4.0.11 \
     && docker-php-ext-enable apcu
 
 ADD ./php.ini /usr/local/etc/php/conf.d
+
+CMD [""]
+ENTRYPOINT ["php", "/var/www/html/bootstrap.php"]

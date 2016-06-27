@@ -47,7 +47,6 @@ php-cli:
   links:
     - db
     - memcached
-  entrypoint: ['php', '/var/www/html/bootstrap.php']
 
 build:
   build: images/build
