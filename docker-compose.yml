@@ -52,3 +52,7 @@ build:
   build: images/build
   volumes:
     - ./src/public:/var/www/html
+    - $SSH_AUTH_SOCK:$SSH_AUTH_SOCK
+  environment:
+    - SSH_AUTH_SOCK
+    - KWF_LINGOHUB_APITOKEN
