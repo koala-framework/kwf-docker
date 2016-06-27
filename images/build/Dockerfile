@@ -23,6 +23,21 @@ RUN php /tmp/composer-setup.php --no-ansi --install-dir=/usr/local/bin --filenam
 ADD ./php.ini /usr/local/etc/php/conf.d
 ADD ./entrypoint.php /usr/local/bin/entrypoint.php
 
+RUN docker-php-ext-install pdo pdo_mysql
+
+RUN apt-get update && apt-get install -y zlib1g-dev
+RUN pecl install memcache \
+    && docker-php-ext-enable memcache
+
+RUN apt-get update && apt-get install -y libtidy-dev
+RUN docker-php-ext-install tidy
+
+RUN pecl install apcu-4.0.11 \
+    && docker-php-ext-enable apcu
+
+ADD ./php.ini /usr/local/etc/php/conf.d
+
+
 
 WORKDIR /var/www/html
 CMD [""]

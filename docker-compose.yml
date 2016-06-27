@@ -56,3 +56,6 @@ build:
   environment:
     - SSH_AUTH_SOCK
     - KWF_LINGOHUB_APITOKEN
+  links:
+    - db
+    - memcached
