@@ -4,6 +4,9 @@ MAINTAINER Niko Sams <ns@vivid-planet.com>
 RUN apt-get update && apt-get install -y nodejs npm git-core
 RUN docker-php-ext-install zip
 
+RUN apt-get update && apt-get install -y libtidy-dev
+RUN docker-php-ext-install tidy
+
 RUN npm install bower
 
 ENV COMPOSER_HOME /composer
